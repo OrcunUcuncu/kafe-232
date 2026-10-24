@@ -1,0 +1,26 @@
+# Visual Studio ve derleme çıktıları
+.vs/
+[Bb]in/
+[Oo]bj/
+packages/
+*.suo
+*.user
+*.userosscache
+
+# Canlı veritabanı ve yedek dosyaları
+*.mdf
+*.ndf
+*.ldf
+*.bak
+*.trn
+
+# Yerel ayarlar ve anahtarlar
+.tools/
+.aws/
+.codex/
+.agents/
+.env
+.env.*
+*.pfx
+*.p12
+*.key
