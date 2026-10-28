@@ -1,16 +1,20 @@
 [CmdletBinding()]
 param(
-    [string]$RepositoryRoot = (Split-Path -Parent $PSScriptRoot),
+    [string]$RepositoryRoot = '',
     [Parameter(Mandatory = $true)][string]$OutputDirectory,
     [string]$NuGetPath = 'nuget.exe',
     [string]$MSBuildPath = 'msbuild.exe',
     [string]$CommitSha,
-    [string]$Repository = 'ekkoxxl/kafe-232',
+    [string]$Repository = 'OrcunUcuncu/kafe-232',
     [switch]$AllowDirtySourceForValidation
 )
 
 $ErrorActionPreference = 'Stop'
 Set-StrictMode -Version Latest
+
+if ([string]::IsNullOrWhiteSpace($RepositoryRoot)) {
+    $RepositoryRoot = Split-Path -Parent $PSScriptRoot
+}
 
 function Invoke-CheckedNative {
     param([string]$Executable, [string[]]$Arguments)
@@ -56,7 +60,7 @@ if ($LASTEXITCODE -ne 0) { throw 'Cannot determine the source commit.' }
 if ([string]::IsNullOrWhiteSpace($CommitSha)) { $CommitSha = $actualCommitSha }
 if ($CommitSha -notmatch '^[a-fA-F0-9]{40}$') { throw 'CommitSha must be a complete 40-character Git commit SHA.' }
 if ($CommitSha -ne $actualCommitSha) { throw 'CommitSha does not match the actual checked-out HEAD.' }
-if ($Repository -ne 'ekkoxxl/kafe-232') { throw 'The package must belong to ekkoxxl/kafe-232.' }
+if ($Repository -ne 'OrcunUcuncu/kafe-232') { throw 'The package must belong to OrcunUcuncu/kafe-232.' }
 $sourceChanges = @(& git -C $RepositoryRoot status --porcelain --untracked-files=normal)
 if ($LASTEXITCODE -ne 0) { throw 'Cannot inspect the source worktree.' }
 $sourceDirty = $sourceChanges.Count -gt 0

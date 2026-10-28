@@ -23,7 +23,7 @@ param(
 
 Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
-$expectedRepository = 'ekkoxxl/kafe-232'
+$expectedRepository = 'OrcunUcuncu/kafe-232'
 
 function Get-FullDirectory([string] $Path) {
     if (-not [IO.Path]::IsPathRooted($Path) -or $Path.StartsWith('\\')) {

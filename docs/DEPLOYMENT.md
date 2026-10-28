@@ -42,7 +42,7 @@ Sunucuda yönetici olarak **Windows PowerShell 5.1** (`powershell.exe`) açın. 
 
 Betik şunları yapar:
 
-1. Repository (`ekkoxxl/kafe-232`), framework (`net481`), onaylanan commit, eksiksiz dosya envanteri, boyut ve SHA256 özetlerini doğrular. Eklenmiş/eksilmiş dosyaları, yol taşmasını, junction/symlink'leri ve veritabanı/anahtar dosyalarını reddeder.
+1. Repository (`OrcunUcuncu/kafe-232`), framework (`net481`), onaylanan commit, eksiksiz dosya envanteri, boyut ve SHA256 özetlerini doğrular. Eklenmiş/eksilmiş dosyaları, yol taşmasını, junction/symlink'leri ve veritabanı/anahtar dosyalarını reddeder.
 2. Aynı anda ikinci yayın veya geri dönüşe izin vermeyen dosya kilidi alır.
 3. Paketi yeni bir `C:\KafeDemo\releases\<sürüm>` klasörüne kopyalar. Önceki sürümleri silmez. Uygulama havuzuna kod üzerinde yalnız okuma/çalıştırma izni verir.
 4. IIS'in fiziksel yolunu yeni sürüme geçirir ve yalnız bu siteye ayrılmış havuzu yeniden başlatır.
