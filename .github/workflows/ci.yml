@@ -19,8 +19,6 @@ jobs:
     name: Build and package
     runs-on: windows-2025
     timeout-minutes: 30
-    env:
-      PACKAGE_DIRECTORY: ${{ runner.temp }}\kafe-web
     steps:
       - name: Check out source
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
@@ -40,15 +38,16 @@ jobs:
       - name: Restore, build, validate Razor views and publish
         shell: pwsh
         run: |
+          $packageDirectory = Join-Path $env:RUNNER_TEMP 'kafe-web'
           ./scripts/Build-Package.ps1 `
-            -OutputDirectory $env:PACKAGE_DIRECTORY `
+            -OutputDirectory $packageDirectory `
             -CommitSha $env:GITHUB_SHA
 
       - name: Store the validated web package
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: kafe-web-${{ github.sha }}
-          path: ${{ env.PACKAGE_DIRECTORY }}
+          path: ${{ runner.temp }}/kafe-web
           if-no-files-found: error
           retention-days: 7
 

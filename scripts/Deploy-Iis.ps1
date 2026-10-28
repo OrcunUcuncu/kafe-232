@@ -295,7 +295,12 @@ try {
     }
     $temporaryState = Join-Path $root ('deployment-state-' + [guid]::NewGuid().ToString('N') + '.tmp')
     [IO.File]::WriteAllText($temporaryState, ($newState | ConvertTo-Json -Depth 5), (New-Object Text.UTF8Encoding($false)))
-    if (Test-Path -LiteralPath $statePath) { [IO.File]::Replace($temporaryState, $statePath, $null) }
+    if (Test-Path -LiteralPath $statePath) {
+        # Windows PowerShell 5.1 binds a null string argument as an empty path.
+        # Keep an actual backup of the previous state for atomic replacement.
+        $stateBackup = Join-Path $root ('deployment-state-' + [guid]::NewGuid().ToString('N') + '.previous.json')
+        [IO.File]::Replace($temporaryState, $statePath, $stateBackup)
+    }
     else { [IO.File]::Move($temporaryState, $statePath) }
     $switched = $false
     [pscustomobject] @{ Operation = $PSCmdlet.ParameterSetName; CommitSha = $ExpectedCommitSha.ToLowerInvariant(); Site = $SiteName; PhysicalPath = $target; AuthenticatedHttp = 200; AnonymousHttp = 401; DatabaseChanged = $false }
